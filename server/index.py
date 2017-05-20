@@ -1,6 +1,8 @@
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory
+
+from flask import Flask, request, redirect, jsonify
 from werkzeug.utils import secure_filename
+
 from passporteye import read_mrz
 
 UPLOAD_FOLDER = 'uploads'
@@ -39,8 +41,8 @@ def upload_file():
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
-            mrz = read_mrz(filepath)
-            return mrz.names
+            result = read_mrz(filepath)
+            return jsonify(result)
         
     return '''
     <!doctype html>

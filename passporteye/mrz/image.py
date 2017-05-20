@@ -5,6 +5,8 @@ Image processing for MRZ extraction.
 Author: Konstantin Tretyakov
 License: MIT
 '''
+from collections import OrderedDict
+
 from skimage import transform, io, morphology, filters, measure
 import numpy as np
 import tempfile, os
@@ -12,7 +14,7 @@ from ..util.pdf import extract_first_jpeg_in_pdf
 from ..util.pipeline import Pipeline
 from ..util.geometry import RotatedBox
 from ..util.ocr import ocr
-from .text import MRZ
+from .MRZ import MRZ
 
 
 class Loader(object):
@@ -170,7 +172,7 @@ class FindFirstValidMRZ(object):
     """Iterates over boxes found by MRZBoxLocator, passes them to BoxToMRZ, finds the first valid MRZ
     or the best-scoring MRZ"""
 
-    __provides__ = ['box_idx', 'roi', 'text', 'mrz']
+    __provides__ = ['box_idx', 'roi', 'text', 'mrz', 'mrz_box']
     __depends__ = ['boxes', 'img', 'img_small', 'scale_factor', '__data__']
 
     def __init__(self, use_original_image=True):
@@ -180,23 +182,23 @@ class FindFirstValidMRZ(object):
         mrzs = []
         data['__debug__mrz'] = []
         for i, b in enumerate(boxes):
-            roi, text, mrz = self.box_to_mrz(b, img, img_small, scale_factor)
+            roi, text, mrz, mrz_box = self.box_to_mrz(b, img, img_small, scale_factor)
             data['__debug__mrz'].append((roi, text, mrz))
             if mrz.valid:
-                return i, roi, text, mrz
+                return i, roi, text, mrz, mrz_box
             elif mrz.valid_score > 0:
-                mrzs.append((i, roi, text, mrz))
+                mrzs.append((i, roi, text, mrz, mrz_box))
         if len(mrzs) == 0:
             return None, None, None, None
         else:
-            mrzs.sort(cmp = lambda x,y: x[3].valid_score - y[3].valid_score)
+            mrzs.sort(cmp=lambda x, y: x[3].valid_score - y[3].valid_score)
             return mrzs[-1]
 
 
 class BoxToMRZ(object):
     """Extracts ROI from the image, corresponding to a box found by MRZBoxLocator, does OCR and MRZ parsing on this region."""
 
-    __provides__ = ['roi', 'text', 'mrz']
+    __provides__ = ['roi', 'text', 'mrz', 'mrz_box']
     __depends__ = ['box', 'img', 'img_small', 'scale_factor']
 
     def __init__(self, use_original_image=True):
@@ -228,7 +230,7 @@ class BoxToMRZ(object):
 
         if not '<' in text:
             # Assume this is unrecoverable and stop here (TODO: this may be premature, although it saves time on useless stuff)
-            return roi, text, MRZ.from_ocr(text)
+            return roi, text, MRZ.from_ocr(text), box
 
         mrz = MRZ.from_ocr(text)
         mrz.aux['method'] = 'direct'
@@ -244,8 +246,7 @@ class BoxToMRZ(object):
         if not mrz.valid:
             text, mrz = self._try_black_tophat(roi, text, mrz)
 
-
-        return roi, text, mrz
+        return roi, text, mrz, box
 
     def _try_larger_image(self, roi, cur_text, cur_mrz, filter_order=3):
         """Attempts to improve the OCR result by scaling the image. If the new mrz is better, returns it, otherwise returns
@@ -299,6 +300,29 @@ class TryOtherMaxWidth(object):
         return mrz
 
 
+class ResultComposer(object):
+    """
+    Composes results into a single map
+    """
+
+    __provides__ = ['result']
+    __depends__ = ['mrz_final', 'mrz_box']
+
+    def __init__(self):
+        pass
+
+    def __call__(self, mrz_final, mrz_box):
+        # type: (MRZ, RotatedBox) -> dict
+        if mrz_final is None:
+            return OrderedDict()
+        mrz_dict = mrz_final.to_dict()
+        box_poly = mrz_box.as_poly().tolist()
+        result = OrderedDict()
+        result['mrz'] = mrz_dict
+        result['mrz']['bounding_box'] = box_poly
+        return result
+
+
 class MRZPipeline(Pipeline):
     """This is the "currently best-performing" pipeline for parsing MRZ from a given image file."""
 
@@ -312,10 +336,11 @@ class MRZPipeline(Pipeline):
         self.add_component('box_locator', MRZBoxLocator())
         self.add_component('mrz', FindFirstValidMRZ())
         self.add_component('other_max_width', TryOtherMaxWidth())
+        self.add_component('result_composer', ResultComposer())
 
     @property
     def result(self):
-        return self['mrz_final']
+        return self['result']
 
 
 def read_mrz(filename, save_roi=False):
@@ -328,5 +353,6 @@ def read_mrz(filename, save_roi=False):
     mrz = p.result
 
     if mrz is not None:
-        if save_roi: mrz.aux['roi'] = p['roi']
+        if save_roi:
+            mrz.aux['roi'] = p['roi']
     return mrz
