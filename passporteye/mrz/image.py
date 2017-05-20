@@ -9,7 +9,7 @@ from collections import OrderedDict
 
 from skimage import transform, io, morphology, filters, measure
 import numpy as np
-import tempfile, os
+import tempfile, os, exifread
 from ..util.pdf import extract_first_jpeg_in_pdf
 from ..util.pipeline import Pipeline
 from ..util.geometry import RotatedBox
@@ -67,7 +67,16 @@ class ExifReader(object):
         self.filename = filename
 
     def __call__(self):
-        return {}
+        if self.filename.lower().endswith('.pdf'):
+            return None
+        else:
+            try:
+                with open(self.filename, 'rb') as f:
+                    tags = exifread.process_file(f, strict=True)
+                    tags_result = [(tag, tags[tag]) for tag in tags.keys()]
+                    return dict(tags_result)
+            except:
+                return None
 
 
 class Scaler(object):
