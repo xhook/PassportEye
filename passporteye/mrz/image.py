@@ -91,9 +91,9 @@ class GrayscaleDetection(object):
 
     def __call__(self):
         img = io.imread(self.filename,  plugin='matplotlib')
-        if len(img) == 2:
+        if len(img.shape) == 2:
             return True
-        elif len(img) == 3:
+        elif len(img.shape) == 3:
             #add pixel check
             return False
 
@@ -364,12 +364,12 @@ class ResultComposer(object):
     """
 
     __provides__ = ['result']
-    __depends__ = ['mrz_final', 'mrz_box', 'exif', 'ela_max_diff']
+    __depends__ = ['mrz_final', 'mrz_box', 'exif', 'ela_max_diff', 'is_grayscale']
 
     def __init__(self):
         pass
 
-    def __call__(self, mrz_final, mrz_box, exif, ela_max_diff):
+    def __call__(self, mrz_final, mrz_box, exif, ela_max_diff, is_grayscale):
         # type: (MRZ, RotatedBox, dict) -> dict
         if mrz_final is None:
             return OrderedDict()
@@ -381,6 +381,7 @@ class ResultComposer(object):
         result['ela'] = {}
         result['ela']['max_diff'] = ela_max_diff
         result['exif'] = exif
+        result['is_grayscale'] = is_grayscale
         return result
 
 
