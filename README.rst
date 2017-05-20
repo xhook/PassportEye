@@ -1,3 +1,11 @@
+pip install Flask
+pip install numpy
+pip install scikit-image
+pip install scikit-learn
+pip install pyteserract
+
+
+
 ==========================================================================
 PassportEye: Python tools for image processing of identification documents
 ==========================================================================
