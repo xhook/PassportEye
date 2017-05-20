@@ -43,8 +43,9 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-            result = read_mrz(filepath)
+            absolute_path = os.path.abspath(filename)
+            file.save(absolute_path)
+            result = read_mrz(absolute_path)
             return jsonify(result)
 
     return '''
