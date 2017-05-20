@@ -82,8 +82,9 @@ class ExifReader(object):
 
 class GrayscaleDetection(object):
     """Takes image, says grayscale or not"""
+    # TODO FIGURE OUT WHY IT'S FAILING FOR GRAYSCALE IMAGES. THOUGH, RETURNS CORRECTLY FOR COLORFUL IMAGES
 
-    __depends__ = ['']
+    __depends__ = []
     __provides__ = ['is_grayscale']
 
     def __init__(self, filename):
@@ -91,11 +92,10 @@ class GrayscaleDetection(object):
 
     def __call__(self):
         img = io.imread(self.filename,  plugin='matplotlib')
-        if len(img.shape) == 2:
-            return True
-        elif len(img.shape) == 3:
-            #add pixel check
+        if len(img.shape) == 3:
             return False
+        else:
+            return True
 
 
 class BlurDetection(object):
