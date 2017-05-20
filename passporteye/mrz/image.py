@@ -79,7 +79,8 @@ class ExifReader(object):
             except:
                 return None
 
-class GrayscaleDetection(self):
+
+class GrayscaleDetection(object):
     """Takes image, says grayscale or not"""
 
     __depends__ = ['']
@@ -96,7 +97,8 @@ class GrayscaleDetection(self):
             #add pixel check
             return False
 
-class BlurDetection(self):
+
+class BlurDetection(object):
     """Detects blurry images"""
 
     __depends__ = ['img']
@@ -111,6 +113,7 @@ class BlurDetection(self):
         if fm < threshold:
             return True
         return False
+
 
 class Scaler(object):
     """Scales `image` down to `img_scaled` so that its width is at most 250."""
