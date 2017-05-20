@@ -7,8 +7,8 @@ console.log(Dropzone);
 Dropzone.options.myAwesomeDropzone = {
     init: function() {
         this.on("success", function(file, response) {
-            console.log(response);
-        });
+            $("#json-output").html(JSON.stringify(response, null, 2));
+       });
     }
 };
 })(jQuery, window.Dropzone);
