@@ -12,6 +12,7 @@
 		<!--[if lte IE 8]>
 		<script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/dropzone.css" />
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
 		<!--[if lte IE 8]>
@@ -29,10 +30,11 @@
 						<p>Open source tool to verify passports, for free, forever<br /> </p>
 						<title>Upload new File</title>
 					    <h1>Upload new File</h1>
-					    <form action="" method=post enctype=multipart/form-data>
-					      <p><input type=file name=file>
-					         <input type=submit value=Upload>
-					    </form>
+					    <!--<form method="post" enctype="multipart/form-data" action="/upload_file">-->
+							<!--<input type=file name=file>-->
+						 	<!--<input type=submit value=Upload>-->
+					    <!--</form>-->
+						<form action="/upload_file" class="dropzone" id="my-awesome-dropzone"></form>
 						<a href="generic.html" class="button special">Upload Passport</a>
 						<br/><br/>
 						<a href="generic.html" class="button">Github</a>
@@ -71,6 +73,7 @@
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/dropzone.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
