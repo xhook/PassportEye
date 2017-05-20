@@ -79,6 +79,38 @@ class ExifReader(object):
             except:
                 return None
 
+class GrayscaleDetection(self):
+    """Takes image, says grayscale or not"""
+
+    __depends__ = ['']
+    __provides__ = ['is_grayscale']
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __call__(self):
+        img = io.imread(self.filename,  plugin='matplotlib')
+        if len(img) == 2:
+            return True
+        elif len(img) == 3:
+            #add pixel check
+            return False
+
+class BlurDetection(self):
+    """Detects blurry images"""
+
+    __depends__ = ['img']
+    __provides__ = ['is_blurry']
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __call__(self, img):
+        threshold = 250
+        fm = cv2.Laplacian(img, cv2.CV_64F).var()
+        if fm < threshold:
+            return True
+        return False
 
 class Scaler(object):
     """Scales `image` down to `img_scaled` so that its width is at most 250."""
@@ -359,6 +391,8 @@ class MRZPipeline(Pipeline):
         self.add_component('loader', Loader(filename))
         self.add_component('ela', ELA(filename))
         self.add_component('exif_reader', ExifReader(filename))
+        self.add_component('grayscale_detection', GrayscaleDetection(filename))
+        self.add_component('blur_detection', BlurDetection(filename))
         self.add_component('scaler', Scaler())
         self.add_component('boone', BooneTransform())
         self.add_component('box_locator', MRZBoxLocator())
