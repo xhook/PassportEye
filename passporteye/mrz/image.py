@@ -73,7 +73,7 @@ class ExifReader(object):
             try:
                 with open(self.filename, 'rb') as f:
                     tags = exifread.process_file(f, strict=True)
-                    tags_result = [(tag, tags[tag]) for tag in tags.keys()]
+                    tags_result = [(tag, str(tags[tag])) for tag in tags.keys()]
                     return dict(tags_result)
             except:
                 return None
