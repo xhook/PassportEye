@@ -15,6 +15,7 @@ from ..util.pipeline import Pipeline
 from ..util.geometry import RotatedBox
 from ..util.ocr import ocr
 from .MRZ import MRZ
+from .ELA import ELA
 
 
 class Loader(object):
@@ -306,13 +307,13 @@ class ResultComposer(object):
     """
 
     __provides__ = ['result']
-    __depends__ = ['mrz_final', 'mrz_box']
+    __depends__ = ['mrz_final', 'mrz_box', 'ela_max_diff']
 
     def __init__(self):
         pass
 
-    def __call__(self, mrz_final, mrz_box):
-        # type: (MRZ, RotatedBox) -> dict
+    def __call__(self, mrz_final, mrz_box, ela_max_diff):
+        # type: (MRZ, RotatedBox, int) -> dict
         if mrz_final is None:
             return OrderedDict()
         mrz_dict = mrz_final.to_dict()
@@ -320,6 +321,8 @@ class ResultComposer(object):
         result = OrderedDict()
         result['mrz'] = mrz_dict
         result['mrz']['bounding_box'] = box_poly
+        result['ela'] = {}
+        result['ela']['max_diff'] = ela_max_diff
         return result
 
 
@@ -331,6 +334,7 @@ class MRZPipeline(Pipeline):
         self.version = '1.0'  # In principle we might have different pipelines in use, so possible backward compatibility is an issue
         self.filename = filename
         self.add_component('loader', Loader(filename))
+        self.add_component('ela', ELA(filename))
         self.add_component('scaler', Scaler())
         self.add_component('boone', BooneTransform())
         self.add_component('box_locator', MRZBoxLocator())
