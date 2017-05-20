@@ -2,7 +2,11 @@ pip install Flask
 pip install numpy
 pip install scikit-image
 pip install scikit-learn
-pip install pyteserract
+pip install pytesseract
+pip install pdfminer
+apt-get install python-tk
+apt-get install python2.7-dev
+apt-get install tesseract-ocr
 
 
 
