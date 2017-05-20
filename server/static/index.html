@@ -11,12 +11,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<!--[if lte IE 8]>
 	<script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<script src="assets/js/prism.js"></script><![endif]-->
 	<link rel="stylesheet" href="assets/css/main.css"/>
+	<link rel="stylesheet" href="assets/css/foo.css"/>
 	<link rel="stylesheet" href="assets/css/dropzone.css"/>
 	<!--[if lte IE 9]>
 	<link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
 	<!--[if lte IE 8]>
 	<link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
+	<link rel="stylesheet" href="assets/css/prism.css"/><![endif]-->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
@@ -40,12 +43,13 @@
 		<div class="col-sm-4">
 			<!--<form action="/upload_file" class="dropzone" id="my-awesome-dropzone"></form>-->
 			<!--<br/><br/>-->
-			<img id="blah" src="/images/sample-id.jpg" width="400px" alt="your image" />
 			<form enctype="multipart/form-data">
-				<label class="btn btn-default btn-file">
-					Browse <input name="file" type="file" hidden>
+				<label id="foo" class="btn btn-default btn-file">
+					<img id="blah" src="/images/sample-id.jpg" width="400px" alt="your image"/>
+					<h2>Choose image file to upload</h2>
+					<input name="file" type="file" hidden>
 				</label>
-				<input type="button" value="Upload" />
+				<input id="upload_button" type="button" value="Upload" />
 			</form>
 			<!--<progress></progress>-->
 		</div>

@@ -75,3 +75,5 @@ $(':button').on('click', function() {
 		// }
 	});
 });
+
+$('#upload_button').click()
