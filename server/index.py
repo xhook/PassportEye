@@ -10,6 +10,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__, static_url_path='/static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['JSON_AS_ASCII'] = False
 
 
 @app.route('/<path:path>')

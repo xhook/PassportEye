@@ -17,6 +17,9 @@
 		<link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
 		<!--[if lte IE 8]>
 		<link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body>
 
@@ -32,6 +35,8 @@
 					    <h3>Analyze passport</h3>
 						<form action="/upload_file" class="dropzone" id="my-awesome-dropzone"></form>
 						<br/><br/>
+						<pre><code id="json-output">...</code></pre>
+
 					</header>
 
 					<!-- Footer -->
