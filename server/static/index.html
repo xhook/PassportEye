@@ -50,19 +50,19 @@
 						<label class="input__label" for="input-first-name">
 							<span class="input__label-content">First Name</span>
 						</label>
-						<input class="input__field" type="text" id="input-first-name" />
+						<input name="first_name" class="input__field" type="text" id="input-first-name" />
 					</span>
 					<span class="input">
 						<label class="input__label" for="input-last-name">
 							<span class="input__label-content">Last Name</span>
 						</label>
-						<input class="input__field" type="text" id="input-last-name" />
+						<input name="last_name" class="input__field" type="text" id="input-last-name" />
 					</span>
 					<span class="input">
 						<label class="input__label" for="input-dob">
 							<span class="input__label-content">Date of birth</span>
 						</label>
-						<input class="input__field" type="text" id="input-dob" />
+						<input name="dob" class="input__field" type="text" id="input-dob" />
 					</span>
 					<span class="input">
 						<label class="input__label" for="upload_button">
@@ -73,7 +73,13 @@
 				</form>
 			</div>
 			<div class="col">
-				<pre><code style="text-align: left; height:380px; overflow: scroll; font-weight: bold;" id="json-output">[Your response should be here]</code></pre>
+				<div id="human_readable_box">
+					foo bar
+				</div>
+				<div id="code_box">
+					<pre><code style="text-align: left; height:380px; overflow: scroll; font-weight: bold;" id="json-output">[Your response should be here]</code></pre>
+				</div>
+				<div id="switcher" style="margin: 0em 0 1em 1em">Switch to code</div>
 			</div>
 		</div>
 	</div>
