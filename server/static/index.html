@@ -11,24 +11,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<!--[if lte IE 8]>
 	<script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-	<script src="assets/js/prism.js"></script><![endif]-->
 	<link rel="stylesheet" href="assets/css/main.css"/>
-	<link rel="stylesheet" href="assets/css/foo.css"/>
-	<link rel="stylesheet" href="assets/css/dropzone.css"/>
 	<!--[if lte IE 9]>
 	<link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
 	<!--[if lte IE 8]>
 	<link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
-	<link rel="stylesheet" href="assets/css/prism.css"/><![endif]-->
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+
+	<link rel="stylesheet" href="assets/css/foo.css"/>
 </head>
 <body>
 
 <!--<a class="github-fork-ribbon" href="https://github.com/konstantint/PassportEye" title="Fork me on GitHub">Fork me on GitHub</a>-->
-<a href="https://github.com/konstantint/PassportEye"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+<a href="https://github.com/konstantint/PassportEye"><img style="position: absolute; top: 0; left: 0; border: 0;"
+														  src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67"
+														  alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -40,21 +36,45 @@
 		<p>Open source tool to verify passports, for free, forever<br/></p>
 	</header>
 
-	<h3>Analyze passport</h3>
-
-	<div class="row">
-		<div class="col-sm-4">
-			<form enctype="multipart/form-data" style="text-align: center;">
-				<label id="foo" class="btn btn-default btn-file">
-					<img id="blah" src="/images/sample-id.jpg" width="400px" alt="your image" style="border-radius: 8px"/>
-					<h2>Choose image file to upload</h2>
-					<input name="file" type="file" hidden>
-				</label>
-				<input style="display: inline" id="upload_button" type="button" value="Upload" />
-			</form>
-		</div>
-		<div class="col-sm-6">
-			<pre><code style="text-align: left; width: 600px; height:380px; overflow: scroll" id="json-output">[Your response should be here]</code></pre>
+	<div class="row row-odd">
+		<h3>Verify your ID</h3>
+		<div style="clear: both">
+			<div class="col">
+				<form enctype="multipart/form-data" style="text-align: center;">
+					<label id="foo" class="btn btn-default btn-file">
+						<img id="blah" class="upload-image" src="/images/sample-id.jpg" alt="your image"/>
+						<h2>Choose image file to upload</h2>
+						<input name="file" type="file" hidden>
+					</label>
+					<span class="input">
+						<label class="input__label" for="input-first-name">
+							<span class="input__label-content">First Name</span>
+						</label>
+						<input class="input__field" type="text" id="input-first-name" />
+					</span>
+					<span class="input">
+						<label class="input__label" for="input-last-name">
+							<span class="input__label-content">Last Name</span>
+						</label>
+						<input class="input__field" type="text" id="input-last-name" />
+					</span>
+					<span class="input">
+						<label class="input__label" for="input-dob">
+							<span class="input__label-content">Date of birth</span>
+						</label>
+						<input class="input__field" type="text" id="input-dob" />
+					</span>
+					<span class="input">
+						<label class="input__label" for="upload_button">
+							<span class="input__label-content"></span>
+						</label>
+						<input class="input__field verify-button" id="upload_button" type="button" value="Verify me"/>
+					</span>
+				</form>
+			</div>
+			<div class="col">
+				<pre><code style="text-align: left; height:380px; overflow: scroll; font-weight: bold;" id="json-output">[Your response should be here]</code></pre>
+			</div>
 		</div>
 	</div>
 
