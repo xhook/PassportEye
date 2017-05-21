@@ -72,4 +72,27 @@ $(':button').on('click', function() {
 			// return myXhr;
 		// }
 	});
+
+	fetch("http://0.0.0.0:5001/upload_file",
+	{
+	    method: "POST",
+	    body: new FormData($('form')[0])
+	})
+	.then(response => {
+	  response.blob().then(blobResponse => {
+	    data = blobResponse;
+	    const urlCreator = window.URL || window.webkitURL;
+	    $('#blah').attr('src', urlCreator.createObjectURL(data));
+
+	    // Now get confidence score if needed
+	   	$.ajax({
+			url: 'http://0.0.0.0:5001/is_human',
+			type: 'GET',
+			success: function(response) {
+				// response is the confidence score
+				console.log(response)
+			}
+		})
+	  })
+	})
 });
