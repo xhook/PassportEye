@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
 
 	<link rel="stylesheet" href="assets/css/foo.css"/>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css"/>
+
 </head>
 <body>
 
@@ -52,23 +54,23 @@
 						</label>
 						<input class="input__field" type="text" id="input-first-name" />
 					</span>
+					<div style="clear:both; height:10px;"></div>
 					<span class="input">
 						<label class="input__label" for="input-last-name">
 							<span class="input__label-content">Last Name</span>
 						</label>
 						<input class="input__field" type="text" id="input-last-name" />
 					</span>
+					<div style="clear:both; height:10px;"></div>
 					<span class="input">
 						<label class="input__label" for="input-dob">
 							<span class="input__label-content">Date of birth</span>
 						</label>
-						<input class="input__field" type="text" id="input-dob" />
+						<input class="input__field" type="text" id="input-dob" name="input-dob" /> <!--yyyy-mm-dd-->
 					</span>
+					<div style="clear:both; height:10px;"></div>
 					<span class="input">
-						<label class="input__label" for="upload_button">
-							<span class="input__label-content"></span>
-						</label>
-						<input class="input__field verify-button" id="upload_button" type="button" value="Verify me"/>
+						<input class="input__field" id="upload_button" type="button" value="Verify me"/>
 					</span>
 				</form>
 			</div>
@@ -121,6 +123,36 @@
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 <script src="assets/js/fileUpload.js"></script>
+<script
+			  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+			  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+			  crossorigin="anonymous"></script>
+<!--<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.min.css">-->
+<!--<script>
+$( document ).ready(function() {
+    $("#input-dob").datepicker({
+        format: 'yyyy-mm-dd'
+    });
+    $("#input-dob").on("change", function () {
+        var fromdate = $(this).val();
+        alert(fromdate);
+    });
+});
+</script>-->
+
+<script>
+$('#input-dob').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    dateFormat: "yy-mm-dd"
+});
+</script>
 
 </body>
 </html>
