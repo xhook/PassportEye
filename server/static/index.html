@@ -36,6 +36,8 @@
 		<p>Open source tool to verify passports, for free, forever<br/></p>
 	</header>
 
+
+
 	<div class="row row-odd">
 		<h3>Verify your ID</h3>
 		<div style="clear: both">
@@ -84,8 +86,82 @@
 		</div>
 	</div>
 
+	<br><h2 style="text-align: center;">How our system works</h2><br>
+	<div class="row row-odd">
+    	<div class="col-sm-3" style="width: 30%;float: left;">
+      		<img src="images/photodetection.jpg" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+    	</div>
+    	<div class="col-sm-6" style="width: 70%;float:right;">
+    		<h1>Photo detection</h1>
+      		<p>Our system has object detection when picture is uploaded for verification.
+      		It detects if there is a person on the picture or something else.
+      		</p>
+      		<p>It can also detect age of the person based on picture and compare it to the age provided on the passport.</p>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-sm-6" style="width: 70%;float:left;">
+    		<h1>Error level analysis</h1>
+      		<p>Error Level Analysis is the analysis of compression artifacts in digital data with lossy compression.
+      		When used, lossy compression is normally applied uniformly to a set of data, such as an image, resulting in a uniform level of compression artifacts.
+      		</p>
+      		<p>Our system can detect this kind of changes.</p>
+    	</div>
+    	<div class="col-sm-3" style="width: 30%;float: right;">
+      		<img src="images/ela.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+    	</div>
+    </div>
+
+ 	<div class="row row-odd">
+    	<div class="col-sm-3" style="width: 30%;float: left;">
+      		<img src="images/mrz.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+    	</div>
+    	<div class="col-sm-6" style="width: 70%;float:right;">
+    		<h1>MRZ checking</h1>
+      		<p>Most travel passports worldwide have a special machine-readable zone (MRZ), which is usually at the bottom of the identity page at the beginning of a passport.Machine-readable passports enable faster processing of arriving passengers by immigration officials, and greater accuracy than manually read passports, as well as faster data entry and data matching against immigration databases and watchlists.
+      		</p>
+      		<p>Our system can check if mrz code and checks correctness of it.</p>
+    	</div>
+    </div>
+
+    <div class="row">
+    	<div class="col-sm-6" style="width: 70%;float:left;">
+    		<h1>Blur picture detection</h1>
+      		<p> If the provided passport picture is blured, it's impossible to read data from it.
+      		</p>
+      		<p>System can detect if it's blured or not. If it is, there is no need to continue checking other data, and verification stops.</p>
+    	</div>
+    	<div class="col-sm-3" style="width: 30%;float: right;">
+      		<img src="images/blur.jpg" alt="No image" style="width:300px;height:200px;margin-top: 10px">
+    	</div>
+    </div>
+
+    <div class="row row-odd">
+    	<div class="col-sm-3" style="width: 30%;float: left;">
+      		<img src="images/exif.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+    	</div>
+    	<div class="col-sm-6" style="width: 70%;float:right;">
+    		<h1>EXIF checking</h1>
+      		<p>Exchangeable image file format(EXIF) is a standard that specifies the formats for images, sound, and ancillary tags used by digital cameras (including smartphones), scanners and other systems handling image and sound files recorded by digital cameras.
+      		</p>
+      		<p>If there was made some modification to the original picture(photoshoped,etc.), our system can detect it and stop verification</p>
+    	</div>
+    </div>
+
+    <div class="row">
+    	<div class="col-sm-6" style="width: 70%;float:left;">
+    		<h1>Grayscale detection</h1>
+      		<p>In photography and computing, a grayscale or greyscale digital image is an image in which the value of each pixel is a single sample, that is, it carries only intensity information.
+      		</p>
+      		<p>Unlike other softwares, if provided passport picture is grayscale, our system is capable of handling this situation and extracting data from it.</p>
+    	</div>
+    	<div class="col-sm-3" style="width: 30%;float: right;">
+      		<img src="images/gray.jpg" alt="No image" style="width:300px;height:200px;margin-top: 10px">
+    	</div>
+    </div>
+
 	<!-- Footer -->
-	<footer id="footer" style="visibility: hidden">
+	<footer id="footer" style="visibility: hidden;">
 		<section>
 			<h2>Aliquam sed mauris</h2>
 			<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut
