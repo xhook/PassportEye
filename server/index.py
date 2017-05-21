@@ -73,15 +73,29 @@ def verify():
         last_name = request.form['last_name']
         dob = request.form['dob']
         result = verify_id(absolute_path, first_name, last_name, dob)
+        print result
         return jsonify(result)
+    return jsonify({"error": "File is not readable"})
 
 
 def compose_features(result, first_name, last_name, dob):
-    jaro_first_names = jellyfish.jaro_distance(unicode(first_name.upper()), unicode(result['mrz']['names'].upper()))
-    jaro_last_name = jellyfish.jaro_distance(unicode(last_name.upper()), unicode(result['mrz']['surname'].upper()))
+    jaro_first_names = -1.0
+    jaro_last_name = -1.0
+    score = 0
+    diff = -1.0
+
+    if 'mrz' in result:
+        mrz = result['mrz']
+        jaro_first_names = jellyfish.jaro_distance(unicode(first_name.upper()), unicode(mrz['names'].upper()))
+        jaro_last_name = jellyfish.jaro_distance(unicode(last_name.upper()), unicode(mrz['surname'].upper()))
+        score = mrz['valid_score']
+
+    if 'ela' in result:
+        diff = result['ela']['max_diff']
+
     features = {
-        'mrz_valid_score': result['mrz']['valid_score'],
-        'ela_max_diff': result['ela']['max_diff'],
+        'mrz_valid_score': score,
+        'ela_max_diff': diff,
         # 'ela_histogram': [0.0] * 768,
         'mrz_document_type_lab_count': -1.0,
         'mrz_document_type_rab_count': -1.0,
@@ -137,10 +151,11 @@ def verify_id(filepath, first_name, last_name, dob):
     result = read_mrz(filepath)
     features = compose_features(result, first_name, last_name, dob)
     prediction = predict(features)
-    prediction['metadata'] = {
-        'first_name': result['mrz']['names'].upper(),
-        'last_name': result['mrz']['surname'].upper()
-    }
+    if 'mrz' in result:
+        prediction['metadata'] = {
+            'first_name': result['mrz']['names'].upper(),
+            'last_name': result['mrz']['surname'].upper()
+        }
     return prediction
 
 

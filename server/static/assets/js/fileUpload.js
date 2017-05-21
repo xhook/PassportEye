@@ -1,6 +1,10 @@
 (function ($) {
 
+	var imageWithBBUrl = null;
+	var confidenceScore = null;
+
 	function readURL(input) {
+		imageWithBBUrl = null;
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function (e) {
@@ -17,6 +21,29 @@
 		}
 
 		readURL(this);
+		fetch("http://178.62.204.148:5001/upload_file", {
+			method: "POST",
+			body: new FormData($('form')[0])
+		})
+		.then(function(response) {
+			response.blob().then(function(blobResponse) {
+				data = blobResponse;
+				const urlCreator = window.URL || window.webkitURL;
+				imageWithBBUrl = urlCreator.createObjectURL(data);
+
+				// Now get confidence score if needed
+				$.ajax({
+					url: 'http://178.62.204.148:5001/is_human',
+					type: 'GET',
+					success: function(response) {
+						confidenceScore = response;
+						// response is the confidence score
+						console.log(response)
+					}
+				});
+			});
+		});
+
 	});
 
 
@@ -37,6 +64,9 @@
 			success: function (response) {
 				$('#json-output').text(JSON.stringify(response, null, 4));
 				if (response['valid']) {
+					if (imageWithBBUrl !== null) {
+						$('#blah').attr('src', imageWithBBUrl);
+					}
 					$('#human_readable_box').html('<img src="/static/images/checkmark-xxl.png" />')
 				} else {
 					$('#human_readable_box').html('Go away')
@@ -60,50 +90,7 @@
 			$('#human_readable_box').show();
 			$('#switcher').text('Show response')
 		}
-	})
-
-
-
-		// Custom XMLHttpRequest
-		// xhr: function() {
-		// 	var myXhr = $.ajaxSettings.xhr();
-		// 	if (myXhr.upload) {
-		// 		For handling the progress of the upload
-				// myXhr.upload.addEventListener('progress', function(e) {
-				// 	if (e.lengthComputable) {
-				// 		$('progress').attr({
-				// 			value: e.loaded,
-				// 			max: e.total
-				// 		});
-				// 	}
-				// } , false);
-			// }
-			// return myXhr;
-		// }
 	});
 
-	fetch("http://0.0.0.0:5001/upload_file",
-	{
-	    method: "POST",
-	    body: new FormData($('form')[0])
-	})
-	.then(response => {
-	  response.blob().then(blobResponse => {
-	    data = blobResponse;
-	    const urlCreator = window.URL || window.webkitURL;
-	    $('#blah').attr('src', urlCreator.createObjectURL(data));
 
-	    // Now get confidence score if needed
-	   	$.ajax({
-			url: 'http://0.0.0.0:5001/is_human',
-			type: 'GET',
-			success: function(response) {
-				// response is the confidence score
-				console.log(response)
-			}
-		})
-	  })
-	})
-});
-
-})(jQuery, window.Dropzone);
+})(jQuery);

@@ -83,6 +83,7 @@ class ExifReader(object):
             except:
                 return None
 
+
 class GreyscaleDetection(object):
     """Takes image, says greyscale or not"""
     # TODO FIGURE OUT WHY IT'S FAILING FOR GREYSCALE IMAGES. THOUGH, RETURNS CORRECTLY FOR COLORFUL IMAGES
@@ -257,7 +258,7 @@ class FindFirstValidMRZ(object):
             elif mrz.valid_score > 0:
                 mrzs.append((i, roi, text, mrz, mrz_box))
         if len(mrzs) == 0:
-            return None, None, None, None
+            return None, None, None, None, None
         else:
             mrzs.sort(cmp=lambda x, y: x[3].valid_score - y[3].valid_score)
             return mrzs[-1]

@@ -39,12 +39,12 @@ class ELA(object):
             ela = self.compute_ela(self.quality, self.filename)
         except:
             # log.info("    Exception occurred while calculating ELA for file %s... ignoring" % filename)
-            return None
+            return None, None
 
         histogram = self.compute_histogram(ela)
         if len(histogram) != 3 * 256:
             # print("    Not RGB image %s... ignoring" % filename)
-            return None
+            return None, None
 
         max_diff = self.compute_max_diff(ela)
 
