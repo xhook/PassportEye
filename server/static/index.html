@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
 
 	<link rel="stylesheet" href="assets/css/foo.css"/>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css"/>
+
 </head>
 <body>
 
@@ -54,23 +56,23 @@
 						</label>
 						<input name="first_name" class="input__field" type="text" id="input-first-name" />
 					</span>
+					<div style="clear:both; height:10px;"></div>
 					<span class="input">
 						<label class="input__label" for="input-last-name">
 							<span class="input__label-content">Last Name</span>
 						</label>
 						<input name="last_name" class="input__field" type="text" id="input-last-name" />
 					</span>
+					<div style="clear:both; height:10px;"></div>
 					<span class="input">
 						<label class="input__label" for="input-dob">
 							<span class="input__label-content">Date of birth</span>
 						</label>
 						<input name="dob" class="input__field" type="text" id="input-dob" />
 					</span>
+					<div style="clear:both; height:10px;"></div>
 					<span class="input">
-						<label class="input__label" for="upload_button">
-							<span class="input__label-content"></span>
-						</label>
-						<input class="input__field verify-button" id="upload_button" type="button" value="Verify me"/>
+						<input class="input__field" id="upload_button" type="button" value="Verify me"/>
 					</span>
 				</form>
 			</div>
@@ -203,6 +205,18 @@
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 <script src="assets/js/fileUpload.js"></script>
+<script
+			  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+			  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+			  crossorigin="anonymous"></script>
+<script>
+$('#input-dob').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    dateFormat: "yy-mm-dd"
+});
+</script>
 
 </body>
 </html>

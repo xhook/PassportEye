@@ -43,6 +43,10 @@ h3 {
 .verify-field {
 }
 
+#upload_button {
+    margin-left:4em;
+}
+
 #human_readable_box {
 	height: 380px;
 	border-radius: 8px;
