@@ -47,6 +47,26 @@ h3 {
     margin-left:4em;
 }
 
+#human_readable_box {
+	height: 380px;
+	border-radius: 8px;
+	border: solid 1px;
+	background: rgba(255, 255, 255, 0.075);
+	border-color: rgba(255, 255, 255, 0.35);
+}
+
+#code_box {
+	height:380px;
+}
+
+#code_box code {
+	margin: 0;
+}
+
+#switcher {
+	cursor: pointer;
+	text-decoration: underline;
+}
 
 .input {
 	margin-bottom: 1em;
@@ -74,3 +94,5 @@ h3 {
 .input__label-content {
 
 }
+
+
