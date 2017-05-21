@@ -10,13 +10,17 @@ from collections import OrderedDict
 from skimage import transform, io, morphology, filters, measure
 import numpy as np
 import tempfile, os, exifread
+#opencv
+import cv2
+#cologram
+#pip install colorgram.py
+import colorgram
 from ..util.pdf import extract_first_jpeg_in_pdf
 from ..util.pipeline import Pipeline
 from ..util.geometry import RotatedBox
 from ..util.ocr import ocr
 from .MRZ import MRZ
 from .ELA import ELA
-
 
 class Loader(object):
     """Loads `filename` to `img`."""
@@ -78,6 +82,47 @@ class ExifReader(object):
                     return dict(tags_result)
             except:
                 return None
+
+class GreyscaleDetection(object):
+    """Takes image, says greyscale or not"""
+    # TODO FIGURE OUT WHY IT'S FAILING FOR GREYSCALE IMAGES. THOUGH, RETURNS CORRECTLY FOR COLORFUL IMAGES
+
+    __depends__ = []
+    __provides__ = ['is_greyscale']
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __call__(self):
+        img = io.imread(self.filename,  plugin='matplotlib')
+        if len(img.shape) == 3:
+            colors = colorgram.extract(self.filename, 20)
+            check = True
+            for col in colors:
+                if np.std(col.rgb) > 10:
+                    check = False
+            return check
+        else:
+            return True
+
+
+class BlurDetection(object):
+    """Detects blurry images"""
+
+    __depends__ = []
+    __provides__ = ['is_blurry']
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __call__(self):
+        threshold = 250
+        img = cv2.imread(self.filename)
+        grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        fm = cv2.Laplacian(grey, cv2.CV_64F).var()
+        if fm < threshold:
+            return True
+        return False
 
 
 class Scaler(object):
@@ -329,23 +374,26 @@ class ResultComposer(object):
     """
 
     __provides__ = ['result']
-    __depends__ = ['mrz_final', 'mrz_box', 'exif', 'ela_max_diff']
+    __depends__ = ['mrz_final', 'mrz_box', 'exif', 'ela_max_diff', 'is_greyscale', 'is_blurry']
 
     def __init__(self):
         pass
 
-    def __call__(self, mrz_final, mrz_box, exif, ela_max_diff):
+    def __call__(self, mrz_final, mrz_box, exif, ela_max_diff, is_greyscale, is_blurry):
         # type: (MRZ, RotatedBox, dict) -> dict
         if mrz_final is None:
             return OrderedDict()
         mrz_dict = mrz_final.to_dict()
         box_poly = mrz_box.as_poly().tolist()
+
         result = OrderedDict()
         result['mrz'] = mrz_dict
         result['mrz']['bounding_box'] = box_poly
         result['ela'] = {}
         result['ela']['max_diff'] = ela_max_diff
         result['exif'] = exif
+        result['is_greyscale'] = is_greyscale
+        result['is_blurry'] = is_blurry
         return result
 
 
@@ -359,13 +407,14 @@ class MRZPipeline(Pipeline):
         self.add_component('loader', Loader(filename))
         self.add_component('ela', ELA(filename))
         self.add_component('exif_reader', ExifReader(filename))
+        self.add_component('greyscale_detection', GreyscaleDetection(filename))
+        self.add_component('blur_detection', BlurDetection(filename))
         self.add_component('scaler', Scaler())
         self.add_component('boone', BooneTransform())
         self.add_component('box_locator', MRZBoxLocator())
         self.add_component('mrz', FindFirstValidMRZ())
         self.add_component('other_max_width', TryOtherMaxWidth())
         self.add_component('result_composer', ResultComposer())
-
     @property
     def result(self):
         return self['result']

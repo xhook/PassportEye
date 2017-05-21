@@ -45,7 +45,7 @@ setup(name='PassportEye',
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      install_requires=['pdfminer', 'numpy', 'scipy', 'scikit-image >= 0.12.1', 'scikit-learn', 'matplotlib', 'pytesseract', 'Pillow', 'jellyfish'],
+      install_requires=['pdfminer', 'numpy', 'scipy', 'scikit-image >= 0.12.1', 'scikit-learn', 'matplotlib', 'pytesseract', 'Pillow', 'exifread', 'opencv-python', 'jellyfish'],
       entry_points={
           'console_scripts': ['evaluate_mrz=passporteye.mrz.scripts:evaluate_mrz',
                               'mrz=passporteye.mrz.scripts:mrz']
