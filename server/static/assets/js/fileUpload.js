@@ -17,9 +17,13 @@
 		}
 
 		readURL(this);
+	});
+
+
+	$(':button').on('click', function () {
 		$.ajax({
 			// Your server script to process the upload
-			url: 'upload_file',
+			url: 'verify',
 			type: 'POST',
 
 			// Form data
@@ -32,13 +36,31 @@
 			processData: false,
 			success: function (response) {
 				$('#json-output').text(JSON.stringify(response, null, 4));
+				if (response['valid']) {
+					$('#human_readable_box').html('<img src="/static/images/checkmark-xxl.png" />')
+				} else {
+					$('#human_readable_box').html('Go away')
+				}
 			}
 		});
 	});
 
+	var show = 'human_readable_box';
+	$('#code_box').hide();
 
-	$(':button').on('click', function () {
-	});
+	$('#switcher').on('click', function () {
+		$('#code_box').hide();
+		$('#human_readable_box').hide();
+		if (show == 'human_readable_box') {
+			show = 'code_box';
+			$('#code_box').show();
+			$('#switcher').text('Show result')
+		} else {
+			show = 'human_readable_box';
+			$('#human_readable_box').show();
+			$('#switcher').text('Show response')
+		}
+	})
 
 
 
