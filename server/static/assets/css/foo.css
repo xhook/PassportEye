@@ -47,12 +47,27 @@ h3 {
     margin-left:4em;
 }
 
-#human_readable_box {
+.human_readable_box {
 	height: 380px;
 	border-radius: 8px;
 	border: solid 1px;
 	background: rgba(255, 255, 255, 0.075);
 	border-color: rgba(255, 255, 255, 0.35);
+	text-align: center;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+}
+
+.human_readable_box img {
+	vertical-align: middle;
+}
+
+.human_readable_box h3 {
+
+}
+
+.ui-datepicker {
+	font-size: 13px;
 }
 
 #code_box {
@@ -61,6 +76,10 @@ h3 {
 
 #code_box code {
 	margin: 0;
+}
+
+.loader {
+	/*display: block;*/
 }
 
 #switcher {

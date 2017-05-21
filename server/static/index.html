@@ -39,7 +39,6 @@
 	</header>
 
 
-
 	<div class="row row-odd">
 		<h3>Verify your ID</h3>
 		<div style="clear: both">
@@ -47,28 +46,28 @@
 				<form enctype="multipart/form-data" style="text-align: center;">
 					<label id="foo" class="btn btn-default btn-file">
 						<img id="blah" class="upload-image" src="/images/sample-id.jpg" alt="your image"/>
-						<h2>Choose image file to upload</h2>
+						<h2 style="text-decoration: underline">Choose an image file to upload</h2>
 						<input name="file" type="file" hidden>
 					</label>
 					<span class="input">
 						<label class="input__label" for="input-first-name">
 							<span class="input__label-content">First Name</span>
 						</label>
-						<input name="first_name" class="input__field" type="text" id="input-first-name" />
+						<input name="first_name" class="input__field" type="text" id="input-first-name"/>
 					</span>
 					<div style="clear:both; height:10px;"></div>
 					<span class="input">
 						<label class="input__label" for="input-last-name">
 							<span class="input__label-content">Last Name</span>
 						</label>
-						<input name="last_name" class="input__field" type="text" id="input-last-name" />
+						<input name="last_name" class="input__field" type="text" id="input-last-name"/>
 					</span>
 					<div style="clear:both; height:10px;"></div>
 					<span class="input">
 						<label class="input__label" for="input-dob">
 							<span class="input__label-content">Date of birth</span>
 						</label>
-						<input name="dob" class="input__field" type="text" id="input-dob" />
+						<input name="dob" class="input__field" type="text" id="input-dob"/>
 					</span>
 					<div style="clear:both; height:10px;"></div>
 					<span class="input">
@@ -78,89 +77,114 @@
 			</div>
 			<div class="col">
 				<div id="human_readable_box">
-					foo bar
+					<div class="human_readable_box" id="human_readable_box_no_result">
+						<h3>Hello!</h3>
+						To verify your identity, please upload a photo of your ID document, and enter your name, surname and date of birth to the form on the left.
+						<br />
+						<br />
+						<img class="loader" src="/static/images/loader.gif" width="48px" height="48px"/>
+					</div>
+					<div class="human_readable_box" id="human_readable_box_success">
+						<h3><img src="/static/images/green.png" width="48px" height="48px"/> Verified</h3>
+						Thank you! Your identity is successfully verified.
+						<br />
+						<br />
+						<img class="loader" src="/static/images/loader.gif" width="48px" height="48px"/>
+					</div>
+					<div class="human_readable_box" id="human_readable_box_failure">
+						<h3><img src="/static/images/red.png" width="48px" height="48px"/> Verification failed</h3>
+						Sorry, verification of your document has failed.
+						<br />
+						<br />
+						<img class="loader" src="/static/images/loader.gif" width="48px" height="48px"/>
+					</div>
 				</div>
 				<div id="code_box">
 					<pre><code style="text-align: left; height:380px; overflow: scroll; font-weight: bold;" id="json-output">[Your response should be here]</code></pre>
 				</div>
-				<div id="switcher" style="margin: 0em 0 1em 1em">Switch to code</div>
+				<div id="switcher" style="margin: 0 0 1em 1em">Show response</div>
 			</div>
 		</div>
 	</div>
 
-	<br><h2 style="text-align: center;">How our system works</h2><br>
+	<br>
+	<h2 style="text-align: center;">How our system works</h2><br>
 	<div class="row row-odd">
-    	<div class="col-sm-3" style="width: 30%;float: left;">
-      		<img src="images/photodetection.jpg" alt="No image" style="width:300px;height:300px;margin-top: 10px">
-    	</div>
-    	<div class="col-sm-6" style="width: 70%;float:right;">
-    		<h1>Photo detection</h1>
-      		<p>Our system has object detection when picture is uploaded for verification.
-      		It detects if there is a person on the picture or something else.
-      		</p>
-      		<p>It can also detect age of the person based on picture and compare it to the age provided on the passport.</p>
-    	</div>
-    </div>
-    <div class="row">
-    	<div class="col-sm-6" style="width: 70%;float:left;">
-    		<h1>Error level analysis</h1>
-      		<p>Error Level Analysis is the analysis of compression artifacts in digital data with lossy compression.
-      		When used, lossy compression is normally applied uniformly to a set of data, such as an image, resulting in a uniform level of compression artifacts.
-      		</p>
-      		<p>Our system can detect this kind of changes.</p>
-    	</div>
-    	<div class="col-sm-3" style="width: 30%;float: right;">
-      		<img src="images/ela.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
-    	</div>
-    </div>
+		<div class="col-sm-3" style="width: 30%;float: left;">
+			<img src="images/photodetection.jpg" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+		</div>
+		<div class="col-sm-6" style="width: 70%;float:right;">
+			<h1>Photo detection</h1>
+			<p>Our system has object detection when picture is uploaded for verification.
+				It detects if there is a person on the picture or something else.
+			</p>
+			<p>It can also detect age of the person based on picture and compare it to the age provided on the passport.</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6" style="width: 70%;float:left;">
+			<h1>Error level analysis</h1>
+			<p>Error Level Analysis is the analysis of compression artifacts in digital data with lossy compression.
+				When used, lossy compression is normally applied uniformly to a set of data, such as an image, resulting in a uniform level of compression artifacts.
+			</p>
+			<p>Our system can detect this kind of changes.</p>
+		</div>
+		<div class="col-sm-3" style="width: 30%;float: right;">
+			<img src="images/ela.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+		</div>
+	</div>
 
- 	<div class="row row-odd">
-    	<div class="col-sm-3" style="width: 30%;float: left;">
-      		<img src="images/mrz.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
-    	</div>
-    	<div class="col-sm-6" style="width: 70%;float:right;">
-    		<h1>MRZ checking</h1>
-      		<p>Most travel passports worldwide have a special machine-readable zone (MRZ), which is usually at the bottom of the identity page at the beginning of a passport.Machine-readable passports enable faster processing of arriving passengers by immigration officials, and greater accuracy than manually read passports, as well as faster data entry and data matching against immigration databases and watchlists.
-      		</p>
-      		<p>Our system can check if mrz code and checks correctness of it.</p>
-    	</div>
-    </div>
+	<div class="row row-odd">
+		<div class="col-sm-3" style="width: 30%;float: left;">
+			<img src="images/mrz.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+		</div>
+		<div class="col-sm-6" style="width: 70%;float:right;">
+			<h1>MRZ checking</h1>
+			<p>Most travel passports worldwide have a special machine-readable zone (MRZ), which is usually at the bottom of the identity page at the beginning of a
+				passport.Machine-readable passports enable faster processing of arriving passengers by immigration officials, and greater accuracy than manually read passports, as
+				well as faster data entry and data matching against immigration databases and watchlists.
+			</p>
+			<p>Our system can check if mrz code and checks correctness of it.</p>
+		</div>
+	</div>
 
-    <div class="row">
-    	<div class="col-sm-6" style="width: 70%;float:left;">
-    		<h1>Blur picture detection</h1>
-      		<p> If the provided passport picture is blured, it's impossible to read data from it.
-      		</p>
-      		<p>System can detect if it's blured or not. If it is, there is no need to continue checking other data, and verification stops.</p>
-    	</div>
-    	<div class="col-sm-3" style="width: 30%;float: right;">
-      		<img src="images/blur.jpg" alt="No image" style="width:300px;height:200px;margin-top: 10px">
-    	</div>
-    </div>
+	<div class="row">
+		<div class="col-sm-6" style="width: 70%;float:left;">
+			<h1>Blur picture detection</h1>
+			<p> If the provided passport picture is blured, it's impossible to read data from it.
+			</p>
+			<p>System can detect if it's blured or not. If it is, there is no need to continue checking other data, and verification stops.</p>
+		</div>
+		<div class="col-sm-3" style="width: 30%;float: right;">
+			<img src="images/blur.jpg" alt="No image" style="width:300px;height:200px;margin-top: 10px">
+		</div>
+	</div>
 
-    <div class="row row-odd">
-    	<div class="col-sm-3" style="width: 30%;float: left;">
-      		<img src="images/exif.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
-    	</div>
-    	<div class="col-sm-6" style="width: 70%;float:right;">
-    		<h1>EXIF checking</h1>
-      		<p>Exchangeable image file format(EXIF) is a standard that specifies the formats for images, sound, and ancillary tags used by digital cameras (including smartphones), scanners and other systems handling image and sound files recorded by digital cameras.
-      		</p>
-      		<p>If there was made some modification to the original picture(photoshoped,etc.), our system can detect it and stop verification</p>
-    	</div>
-    </div>
+	<div class="row row-odd">
+		<div class="col-sm-3" style="width: 30%;float: left;">
+			<img src="images/exif.png" alt="No image" style="width:300px;height:300px;margin-top: 10px">
+		</div>
+		<div class="col-sm-6" style="width: 70%;float:right;">
+			<h1>EXIF checking</h1>
+			<p>Exchangeable image file format(EXIF) is a standard that specifies the formats for images, sound, and ancillary tags used by digital cameras (including smartphones),
+				scanners and other systems handling image and sound files recorded by digital cameras.
+			</p>
+			<p>If there was made some modification to the original picture(photoshoped,etc.), our system can detect it and stop verification</p>
+		</div>
+	</div>
 
-    <div class="row">
-    	<div class="col-sm-6" style="width: 70%;float:left;">
-    		<h1>Grayscale detection</h1>
-      		<p>In photography and computing, a grayscale or greyscale digital image is an image in which the value of each pixel is a single sample, that is, it carries only intensity information.
-      		</p>
-      		<p>Unlike other softwares, if provided passport picture is grayscale, our system is capable of handling this situation and extracting data from it.</p>
-    	</div>
-    	<div class="col-sm-3" style="width: 30%;float: right;">
-      		<img src="images/gray.jpg" alt="No image" style="width:300px;height:200px;margin-top: 10px">
-    	</div>
-    </div>
+	<div class="row">
+		<div class="col-sm-6" style="width: 70%;float:left;">
+			<h1>Grayscale detection</h1>
+			<p>In photography and computing, a grayscale or greyscale digital image is an image in which the value of each pixel is a single sample, that is, it carries only
+				intensity information.
+			</p>
+			<p>Unlike other softwares, if provided passport picture is grayscale, our system is capable of handling this situation and extracting data from it.</p>
+		</div>
+		<div class="col-sm-3" style="width: 30%;float: right;">
+			<img src="images/gray.jpg" alt="No image" style="width:300px;height:200px;margin-top: 10px">
+		</div>
+	</div>
 
 	<!-- Footer -->
 	<footer id="footer" style="visibility: hidden;">
@@ -214,7 +238,9 @@ $('#input-dob').datepicker({
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    dateFormat: "yy-mm-dd"
+	yearRange: '-100:-3',
+    dateFormat: "yy-mm-dd",
+	defaultDate: '1964-08-01'
 });
 </script>
 

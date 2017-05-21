@@ -46,8 +46,42 @@
 
 	});
 
+	$('#human_readable_box_no_result').show();
+	$('#human_readable_box_failure').hide();
+	$('#human_readable_box_success').hide();
+
+	var successCb = function (response) {
+		$('.loader').hide();
+		$('#json-output').text(JSON.stringify(response, null, 4));
+		if (response['valid']) {
+			if (imageWithBBUrl !== null) {
+				$('#blah').attr('src', imageWithBBUrl);
+			}
+			$('#human_readable_box_no_result').hide();
+			$('#human_readable_box_failure').hide();
+			$('#human_readable_box_success').show();
+
+		} else {
+			$('#human_readable_box_no_result').hide();
+			$('#human_readable_box_failure').show();
+			$('#human_readable_box_success').hide();
+		}
+	};
+
+	$('.loader').hide();
 
 	$(':button').on('click', function () {
+		// successCb({
+		// 	'score': 0.99,
+		// 	'valid': false,
+		// 	'metadata': {
+		// 		'first_name': 'Foo',
+		// 		'last_name': 'Bar'
+		// 	}
+		// });
+		// return;
+		$('.loader').show();
+
 		$.ajax({
 			// Your server script to process the upload
 			url: 'verify',
@@ -61,16 +95,9 @@
 			cache: false,
 			contentType: false,
 			processData: false,
-			success: function (response) {
-				$('#json-output').text(JSON.stringify(response, null, 4));
-				if (response['valid']) {
-					if (imageWithBBUrl !== null) {
-						$('#blah').attr('src', imageWithBBUrl);
-					}
-					$('#human_readable_box').html('<img src="/static/images/checkmark-xxl.png" />')
-				} else {
-					$('#human_readable_box').html('Go away')
-				}
+			success: successCb,
+			failure: function () {
+				$('.loader').hide();
 			}
 		});
 	});
